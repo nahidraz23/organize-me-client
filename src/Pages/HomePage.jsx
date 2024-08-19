@@ -1,7 +1,10 @@
+import Calendar from "../components/Calendar";
+
 const HomePage = () => {
+
     return (
         <div>
-            <h1>Home page</h1>
+            <Calendar></Calendar>
         </div>
     );
 };
