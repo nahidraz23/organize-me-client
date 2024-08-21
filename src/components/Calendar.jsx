@@ -6,11 +6,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import EventCard from "./EventCard";
 import { useForm } from "react-hook-form";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import { format } from "date-fns";
 
 const CalendarComponent = () => {
   const [value, setValue] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const axiosPublic = useAxiosPublic();
+
+  const formatedDate = format(new Date(startDate), "MM/dd/yyyy")
 
   // Load data
   useEffect(() => {
@@ -26,20 +31,27 @@ const CalendarComponent = () => {
     watch,
     formState: { errors },
   } = useForm()
+  
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const title = data.title;
     const description = data.description;
-    const date = startDate;
+    const date = formatedDate;
     const eventInfo = {title, description, date}
+
+    await axiosPublic.post('/events', eventInfo)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
 
     console.log(eventInfo)
   }
 
+
+
   // console.log(startDate);
 
   const showModal = () => {
-    
+
     // const {value: text}=await Swal.fire({
     //   title: "Input email address",
     //   input: "text",
@@ -53,7 +65,7 @@ const CalendarComponent = () => {
     //   // Swal.fire(`Entered email: ${text}`);
 
     // }
-    console.log(value);
+    // console.log(value);
   };
 
   return (
@@ -90,7 +102,6 @@ const CalendarComponent = () => {
                       onChange={(date) => setStartDate(date)}
                       isClearable
                       placeholderText="Selection cleared!"
-                      dateFormat={"dd/mm/yyyy"}
                     />
                     <label className="label">
                       <span className="label-text">Event title</span>
