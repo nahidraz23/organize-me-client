@@ -1,0 +1,28 @@
+[
+    {
+      "title": "Tech Conference 2024",
+      "date": "2024-09-15",
+      "description": "A gathering of industry leaders and innovators discussing the latest trends in technology and software development."
+    },
+    {
+      "title": "Web Development Workshop",
+      "date": "2024-10-05",
+      "description": "An interactive workshop covering advanced techniques in modern web development, including React and Node.js."
+    },
+    {
+      "title": "Startup Networking Meetup",
+      "date": "2024-11-12",
+      "description": "A networking event for startup founders and tech enthusiasts to share ideas, collaborate, and build connections."
+    },
+    {
+      "title": "UI/UX Design Summit",
+      "date": "2024-12-03",
+      "description": "A summit focused on the latest advancements in UI/UX design, featuring talks from leading designers and hands-on sessions."
+    },
+    {
+      "title": "Annual Coding Hackathon",
+      "date": "2024-12-15",
+      "description": "A 24-hour coding competition where developers come together to tackle challenging problems and showcase their skills."
+    }
+  ]
+  
