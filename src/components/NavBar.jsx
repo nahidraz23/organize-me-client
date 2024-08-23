@@ -6,7 +6,7 @@ const NavBar = () => {
     const navLinks = (
         <div className='flex gap-4'>
             <NavLink>Home</NavLink>
-            <NavLink>Event Details</NavLink>
+            <NavLink>All Events</NavLink>
         </div>
     )
     return (
