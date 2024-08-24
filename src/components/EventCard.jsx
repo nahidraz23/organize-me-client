@@ -2,7 +2,7 @@ import React from 'react';
 
 const EventCard = ({ events }) => {
     return (
-        <div className="border-2 w-[550px] h-[600px] space-y-3 overflow-auto flex flex-col items-center rounded-2xl p-5">
+        <div className="bg-[#F9E2AF] w-[550px] h-[600px] space-y-3 overflow-auto flex flex-col items-center rounded-2xl p-5">
             {events.map((event, index) => (
                 <div key={index} className="">
                     <div className="card bg-base-100 w-96 shadow-xl ">

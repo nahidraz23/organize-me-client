@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import EventCard from "./EventCard";
 import useAxiosPublic from "../hooks/useAxiosPublic";
@@ -12,7 +12,7 @@ import useEvent from "../hooks/useEvent";
 
 const CalendarComponent = () => {
   const [value, setValue] = useState(new Date());
-  // const [events, setEvents] = useState([]);
+  // const [haveEvent, setHaveEvent] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const axiosPublic = useAxiosPublic();
   const [events] = useEvent();
@@ -20,36 +20,11 @@ const CalendarComponent = () => {
   const formatedDate = format(new Date(startDate), "MM/dd/yyyy");
   const calendarFormatedDate = format(new Date(value), "MM/dd/yyyy");
 
-  // Load data
-  // useEffect(() => {
-  //   fetch("/events.json")
-  //     .then((res) => res.json())
-  //     .then((data) => setEvents(data));
-  // }, []);
+  const findEvent = events.filter(event => event.date == calendarFormatedDate)
 
-  // React hook form
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm()
-
-
-  // const onSubmit = async data => {
-  //   const title = data.title;
-  //   const description = data.description;
-  //   const date = formatedDate;
-  //   const eventInfo = { title, description, date }
-
-  //   console.log(eventInfo)
-
-  //   await axiosPublic.post('/events', eventInfo)
-  //     .then(res => console.log(res))
-  //     .catch(err => console.log(err))
-
-
-  // }
+  const hasEvent = [
+    '08/24/2024'
+  ];
 
   const onSubmit = async (e) => {
     // e.preventDefault();
@@ -61,7 +36,7 @@ const CalendarComponent = () => {
 
     await axiosPublic.post('/events', eventInfo)
       .then(res => {
-        if(res.data.insertedId){
+        if (res.data.insertedId) {
           toast.success('Event added Successfully!')
         }
       })
@@ -88,7 +63,7 @@ const CalendarComponent = () => {
 
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between" >
       <div className="flex flex-col items-center space-y-5 mt-10">
         <div>
           <h1 className="text-3xl font-bold">Event Lists</h1>
@@ -154,7 +129,6 @@ const CalendarComponent = () => {
       <div className="flex items-center">
         <Calendar
           onChange={setValue}
-          className={""}
           onClickDay={showModal}
         />
       </div>
@@ -162,7 +136,7 @@ const CalendarComponent = () => {
         position="top-right"
         reverseOrder={false}
       />
-    </div>
+    </div >
   );
 };
 
