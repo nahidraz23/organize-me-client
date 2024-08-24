@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import EventCard from "./EventCard";
 import useAxiosPublic from "../hooks/useAxiosPublic";
@@ -11,20 +11,25 @@ import toast, { Toaster } from "react-hot-toast";
 import useEvent from "../hooks/useEvent";
 
 const CalendarComponent = () => {
-  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   // const [haveEvent, setHaveEvent] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const axiosPublic = useAxiosPublic();
-  const [events] = useEvent();
+  const [events, refetch] = useEvent();
 
   const formatedDate = format(new Date(startDate), "MM/dd/yyyy");
-  const calendarFormatedDate = format(new Date(value), "MM/dd/yyyy");
+  // const calendarFormatedDate = format(new Date(date), "MM/dd/yyyy");
 
-  const findEvent = events.filter(event => event.date == calendarFormatedDate)
+  const formatDate = date => {
+    return format(new Date(date), "MM/dd/yyyy");
+  }
 
-  const hasEvent = [
-    '08/24/2024'
-  ];
+  const hasEvent = date => {
+    const calendarFormatedDate = formatDate(date);
+    return events.some(event => event.date === calendarFormatedDate);
+  }
+
+  // console.log(date)
 
   const onSubmit = async (e) => {
     // e.preventDefault();
@@ -41,6 +46,7 @@ const CalendarComponent = () => {
         }
       })
       .catch(err => toast.error(`${err.message}`))
+      refetch();
   }
 
 
@@ -128,8 +134,9 @@ const CalendarComponent = () => {
       </div>
       <div className="flex items-center">
         <Calendar
-          onChange={setValue}
+          onChange={setDate}
           onClickDay={showModal}
+          tileClassName={({ date, view }) => view === 'month' && hasEvent(date) ? 'event-date' : null}
         />
       </div>
       <Toaster

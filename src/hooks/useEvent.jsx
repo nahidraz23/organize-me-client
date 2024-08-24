@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useEvent = () => {
    const axiosPublic = useAxiosPublic();
 
-   const {data: events=[]} = useQuery({
+   const {data: events=[], refetch} = useQuery({
     queryKey: ['events'],
     queryFn: async () => {
         const res = await axiosPublic.get('/events')
@@ -13,7 +13,7 @@ const useEvent = () => {
     }
    })
 
-   return [events];
+   return [events, refetch];
 };
 
 export default useEvent;
