@@ -1,6 +1,40 @@
 import React from 'react';
+import useAxiosPublic from '../hooks/useAxiosPublic';
+import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import useEvent from '../hooks/useEvent';
 
 const EventCard = ({ events }) => {
+
+    const axiosPublic = useAxiosPublic();
+    const [event , refetch] = useEvent();
+
+    // handleDelete event
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosPublic.delete(`/events/${id}`);
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+            }
+            refetch();
+        });
+    }
+
+
     return (
         <div className="bg-[#F9E2AF] w-[550px] h-[600px] space-y-3 overflow-auto flex flex-col items-center rounded-2xl p-5">
             {events.map((event, index) => (
@@ -14,7 +48,7 @@ const EventCard = ({ events }) => {
                                 </div>
                                 <div className="grid grid-cols-1 gap-2">
                                     {/* Delete button */}
-                                    <button className="btn btn-square btn-sm bg-[#4A249D] text-white">
+                                    <button onClick={() => handleDelete(event._id)} className="btn btn-square btn-sm bg-[#4A249D] text-white">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-6 w-6"

@@ -11,28 +11,24 @@ import toast, { Toaster } from "react-hot-toast";
 import useEvent from "../hooks/useEvent";
 
 const CalendarComponent = () => {
-  const [date, setDate] = useState(new Date());
-  // const [haveEvent, setHaveEvent] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
   const axiosPublic = useAxiosPublic();
+  const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
   const [events, refetch] = useEvent();
 
   const formatedDate = format(new Date(startDate), "MM/dd/yyyy");
-  // const calendarFormatedDate = format(new Date(date), "MM/dd/yyyy");
+  // const selectedDate = format(new Date(date), "MM/dd/yyyy");
 
   const formatDate = date => {
     return format(new Date(date), "MM/dd/yyyy");
   }
 
-  const hasEvent = date => {
+  const hasEvent = (date) => {
     const calendarFormatedDate = formatDate(date);
     return events.some(event => event.date === calendarFormatedDate);
   }
 
-  // console.log(date)
-
   const onSubmit = async (e) => {
-    // e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
@@ -46,30 +42,12 @@ const CalendarComponent = () => {
         }
       })
       .catch(err => toast.error(`${err.message}`))
-      refetch();
+    refetch();
   }
 
 
-  const showModal = () => {
-
-    // const {value: text}=await Swal.fire({
-    //   title: "Input email address",
-    //   input: "text",
-    //   input: "textarea",
-    //   inputLabel: "Your email address",
-    //   inputPlaceholder: `Enter Title here
-    //   Start typing here
-    //   `
-    // });
-    // if (text) {
-    //   // Swal.fire(`Entered email: ${text}`);
-
-    // }    
-  };
-
-
   return (
-    <div className="flex justify-between" >
+    <div className="flex justify-around flex-1" >
       <div className="flex flex-col items-center space-y-5 mt-10">
         <div>
           <h1 className="text-3xl font-bold">Event Lists</h1>
@@ -77,6 +55,7 @@ const CalendarComponent = () => {
         <div className="relative">
           <EventCard events={events} />
         </div>
+        {/* Modal div */}
         <div className="mt-10 flex justify-center">
           {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
@@ -126,16 +105,16 @@ const CalendarComponent = () => {
                     ></textarea>
                   </div>
                   <button className="btn bg-[#F6F5F5] hover:bg-[#F9E2AF] border-none">Done</button>
+                  <p className="text-center mt-8">Press <strong>ESC</strong> to close the modal</p>
                 </form>
               </div>
             </div>
           </dialog>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center flex-1 justify-center ">
         <Calendar
-          onChange={setDate}
-          onClickDay={showModal}
+          oncli={setDate}
           tileClassName={({ date, view }) => view === 'month' && hasEvent(date) ? 'event-date' : null}
         />
       </div>
