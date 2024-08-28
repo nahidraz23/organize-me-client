@@ -4,7 +4,6 @@
 
 .react-calendar {
   width: 600px !important;
-  border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
 }
@@ -13,4 +12,5 @@
 .react-calendar__tile.event-date {
   background-color: aqua;
   font-weight: 600;
+  border-radius: 50px;
 }

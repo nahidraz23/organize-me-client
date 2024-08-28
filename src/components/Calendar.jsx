@@ -47,7 +47,7 @@ const CalendarComponent = () => {
 
 
   return (
-    <div className="flex justify-around flex-1" >
+    <div className="flex justify-around" >
       <div className="flex flex-col items-center space-y-5 mt-10">
         <div>
           <h1 className="text-3xl font-bold">Event Lists</h1>
@@ -112,7 +112,7 @@ const CalendarComponent = () => {
           </dialog>
         </div>
       </div>
-      <div className="flex items-center flex-1 justify-center ">
+      <div className="flex items-center justify-center ">
         <Calendar
           oncli={setDate}
           tileClassName={({ date, view }) => view === 'month' && hasEvent(date) ? 'event-date' : null}

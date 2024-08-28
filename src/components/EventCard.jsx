@@ -7,7 +7,7 @@ import useEvent from '../hooks/useEvent';
 const EventCard = ({ events }) => {
 
     const axiosPublic = useAxiosPublic();
-    const [event , refetch] = useEvent();
+    const [event, refetch] = useEvent();
 
     // handleDelete event
     const handleDelete = (id) => {
@@ -32,6 +32,19 @@ const EventCard = ({ events }) => {
             }
             refetch();
         });
+    }
+
+    // handleView event 
+    const handleViewEvent = async id => {
+        // console.log(id)
+        const res = await axiosPublic.get(`/event/${id}`);
+        if (res.data) {
+            Swal.fire({
+                title: `${res.data.title}`,
+                text: `${res.data.description}`,
+                icon: "info"
+            });
+        }
     }
 
 
@@ -65,7 +78,7 @@ const EventCard = ({ events }) => {
                                         </svg>
                                     </button>
                                     {/* View Details button */}
-                                    <button className="btn btn-square btn-sm bg-[#009FBD] text-white">
+                                    <button onClick={() => handleViewEvent(event._id)} className="btn btn-square btn-sm bg-[#009FBD] text-white">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
